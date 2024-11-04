@@ -1,101 +1,219 @@
-import Image from "next/image";
+"use client"
+
+import {Aleo, Inter} from "next/font/google";
+import {twMerge} from "tailwind-merge";
+import {RevealTextProvider} from "@/components/providers/reveal-text-provider";
+import RevealText from "@/components/ui/reveal-text";
+import {motion} from "framer-motion";
+import {Briefcase, Download, LinkedinIcon, MapPin} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {siStackoverflow} from 'simple-icons';
+import Link from "next/link";
+import React from "react";
+
+const inter = Inter({
+  subsets: ["latin"]
+})
+
+const aleo = Aleo({
+  subsets: ["latin"]
+})
+
+const PulsingDot = () => (
+  <motion.div
+    className="flex items-center space-x-2 mb-5"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    <motion.div
+      className="w-3 h-3 bg-green-500 rounded-full"
+      animate={{
+        scale: [1, 1.2, 1],
+        opacity: [0.7, 1, 0.7],
+      }}
+      transition={{
+        duration: 1.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+    />
+    <span className="text-sm ">Currently looking for jobs in London.</span>
+  </motion.div>
+)
 
 export default function Home() {
+  console.log(siStackoverflow)
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className={twMerge("flex flex-col h-[100vh] w-full items-center justify-center p-6", inter.className)}>
+      <div className={"flex flex-col max-w-2xl w-full gap-4"}>
+        <RevealTextProvider>
+          <div className={"flex flex-col gap-2"}>
+            <PulsingDot />
+            <RevealText className={""}>
+              <p className={twMerge("text-base font-bold", aleo.className)}>Welcome! I&#39;m</p>
+            </RevealText>
+            <RevealText staggerChars={true}>
+              <p className={twMerge("text-4xl font-bold", aleo.className)}>Ege Kaan Gürkan</p>
+            </RevealText>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            <div className={"flex w-full items-center gap-2 overflow-hidden"}>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: "100%"
+                }}
+                animate={{
+                  opacity: 1,
+                  y: ["100%", 0],
+                }}
+                transition={{
+                  delay: 0.7,
+                  duration: 0.3,
+                  ease: "easeInOut",
+                }}
+              >
+                <Briefcase className={"w-5 h-5"} strokeWidth={1}/>
+              </motion.div>
+              <RevealText>
+                <p className={"text-base text-muted-foreground"}>
+                  Integrations and Software Developer @ Maltego
+                </p>
+              </RevealText>
+            </div>
+            <div className={"flex w-full items-center gap-2 overflow-hidden"}>
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: "100%"
+                }}
+                animate={{
+                  opacity: 1,
+                  y: ["100%", 0],
+                }}
+                transition={{
+                  delay: 0.9,
+                  duration: 0.3,
+                  ease: "easeInOut",
+                }}
+              >
+                <MapPin className={"w-5 h-5"} strokeWidth={1}/>
+              </motion.div>
+              <RevealText>
+                <p className={"text-base text-muted-foreground"}>
+                  From Ankara, based in Munich
+                </p>
+              </RevealText>
+            </div>
+
+            <RevealText staggerChars={false}>
+              <p className={twMerge(
+                "text-lg text-foreground leading-relaxed max-w-prose text-wrap",
+              )}>
+                A computer scientist dedicated to creating intelligent integrations and scalable full-stack solutions. Driven by a passion for LLM technologies and process optimization, I transform complex technical challenges into efficient and impactful solutions.
+              </p>
+            </RevealText>
+            <motion.div
+              className={"flex items-center"}
+              animate={{
+                opacity: 1
+              }}
+              initial={{
+                opacity: 0
+              }}
+              transition={{
+                delay: 1,
+                duration: 0.3,
+                ease: "easeInOut"
+              }}
+            >
+              <Link href={"/resume.pdf"} download={"resume.pdf"}>
+                <Button variant={"outline"}>
+                  <Download className={"w-5 h-5"}/>
+                  <p className={"text-base"}>Resume</p>
+                </Button>
+              </Link>
+            </motion.div>
+
+            <div className={"flex gap-2"}>
+              <motion.div
+                animate={{
+                  scale: 1,
+                  opacity: 1
+                }}
+                initial={{
+                  scale: 0,
+                  opacity: 0
+                }}
+                transition={{
+                  delay: 1,
+                  duration: 0.3,
+                  ease: "easeInOut"
+                }}
+              >
+                <Link href={"https://github.com/EgeKaanGurkan"}>
+                  <Button size={"icon"} variant={"ghost"} className={"hover:bg-[#5b5757]"}>
+                    <img src={"https://cdn.simpleicons.org/github/white"} className={"w-5 h-5"}/>
+                  </Button>
+                </Link>
+              </motion.div>
+
+              <motion.div
+                animate={{
+                  scale: 1,
+                  opacity: 1
+                }}
+                initial={{
+                  scale: 0,
+                  opacity: 0
+                }}
+                transition={{
+                  delay: 1.1,
+                  duration: 0.3,
+                  ease: "easeInOut"
+                }}
+              >
+                <Link href={"https://linkedin.com/in/ege-kaan-gurkan"}>
+                  <Button size={"icon"} variant={"ghost"} className={"hover:bg-[#0A66C2]"}>
+                    <LinkedinIcon className={"w-5 h-5 "}/>
+                  </Button>
+                </Link>
+              </motion.div>
+              <motion.div
+                animate={{
+                  scale: 1,
+                  opacity: 1
+                }}
+                initial={{
+                  scale: 0,
+                  opacity: 0
+                }}
+                transition={{
+                  delay: 1.2,
+                  duration: 0.3,
+                  ease: "easeInOut"
+                }}
+              >
+                <Link href={"https://stackoverflow.com/users/4770282/ege-kaan-g%c3%bcrkan"}>
+                  <Button size={"icon"} variant={"ghost"} className={"hover:bg-[#F58025]"}>
+                    <img src={"https://cdn.simpleicons.org/stackoverflow/white"} className={"w-5 h-5"}/>
+                  </Button>
+                </Link>
+              </motion.div>
+            </div>
+
+            {/*<div className={"flex gap-2"}>*/}
+            {/*  <ProjectPreviewCard project={{*/}
+            {/*    name: "Buluşunca",*/}
+            {/*    tags: ["aws"],*/}
+            {/*    description: "A startup I started with a few friends during the COVID-19 pandemic lockdowns to help small businesses."*/}
+            {/*  }}/>*/}
+            {/*</div>*/}
+
+          </div>
+
+        </RevealTextProvider>
+      </div>
     </div>
   );
 }
