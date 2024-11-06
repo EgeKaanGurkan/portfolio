@@ -38,7 +38,7 @@ const PulsingDot = () => (
         ease: "easeInOut",
       }}
     />
-    <span className="text-sm ">Currently looking for jobs in London.</span>
+    <span className="text-sm ">Currently browsing jobs in London.</span>
   </motion.div>
 )
 
@@ -75,7 +75,7 @@ export default function Home() {
               >
                 <Briefcase className={"w-5 h-5"} strokeWidth={1}/>
               </motion.div>
-              <RevealText>
+              <RevealText className={"text-wrap"}>
                 <p className={"text-base text-muted-foreground"}>
                   Integrations and Software Developer @ Maltego
                 </p>
@@ -100,7 +100,7 @@ export default function Home() {
                 <MapPin className={"w-5 h-5"} strokeWidth={1}/>
               </motion.div>
               <RevealText>
-                <p className={"text-base text-muted-foreground"}>
+                <p className={"text-base text-wrap text-muted-foreground"}>
                   From Ankara, based in Munich
                 </p>
               </RevealText>
