@@ -49,7 +49,7 @@ export default function Home() {
       <div className={"flex flex-col max-w-2xl w-full gap-4"}>
         <RevealTextProvider>
           <div className={"flex flex-col gap-2"}>
-            <PulsingDot />
+            {/*<PulsingDot />*/}
             <RevealText className={""}>
               <p className={twMerge("text-base font-bold", aleo.className)}>Welcome! I&#39;m</p>
             </RevealText>
