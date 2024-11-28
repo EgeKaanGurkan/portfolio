@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import React from "react";
+import {Analytics} from "@vercel/analytics/vue";
 
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
+      <Analytics />
       <ThemeProvider
         attribute="class"
         defaultTheme="dark"
