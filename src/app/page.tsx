@@ -1,219 +1,230 @@
-"use client"
+"use client";
 
-import {Aleo, Inter} from "next/font/google";
-import {twMerge} from "tailwind-merge";
-import {RevealTextProvider} from "@/components/providers/reveal-text-provider";
-import RevealText from "@/components/ui/reveal-text";
-import {motion} from "framer-motion";
-import {Briefcase, Download, LinkedinIcon, MapPin} from "lucide-react";
-import {Button} from "@/components/ui/button";
-import {siStackoverflow} from 'simple-icons';
+import { motion, type Variants } from "motion/react";
 import Link from "next/link";
 import React from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
-const inter = Inter({
-  subsets: ["latin"]
-})
+const container: Variants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.06,
+      delayChildren: 0.05,
+    },
+  },
+};
 
-const aleo = Aleo({
-  subsets: ["latin"]
-})
+const item: Variants = {
+  hidden: { opacity: 0, y: 6, filter: "blur(4px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+};
 
-// const PulsingDot = () => (
-//   <motion.div
-//     className="flex items-center space-x-2 mb-5"
-//     initial={{ opacity: 0, y: 20 }}
-//     animate={{ opacity: 1, y: 0 }}
-//     transition={{ duration: 0.5 }}
-//   >
-//     <motion.div
-//       className="w-3 h-3 bg-green-500 rounded-full"
-//       animate={{
-//         scale: [1, 1.2, 1],
-//         opacity: [0.7, 1, 0.7],
-//       }}
-//       transition={{
-//         duration: 1.5,
-//         repeat: Infinity,
-//         ease: "easeInOut",
-//       }}
-//     />
-//     <span className="text-sm ">Currently browsing jobs in London.</span>
-//   </motion.div>
-// )
+function A({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  const external = href.startsWith("http") || href.startsWith("mailto:");
+  const className =
+    "underline decoration-muted-foreground/50 underline-offset-[3px] hover:decoration-foreground transition-colors";
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
+
+function Row({
+  year,
+  children,
+  right,
+  href,
+  subtitle,
+  subtitleHref,
+}: {
+  year?: string;
+  children: React.ReactNode;
+  right?: string;
+  href?: string;
+  subtitle?: React.ReactNode;
+  subtitleHref?: string;
+}) {
+  const content = href ? (
+    <A href={href}>{children}</A>
+  ) : (
+    <span>{children}</span>
+  );
+  const sub =
+    subtitle != null ? (
+      subtitleHref ? (
+        <A href={subtitleHref}>{subtitle}</A>
+      ) : (
+        <span>{subtitle}</span>
+      )
+    ) : null;
+  return (
+    <motion.div
+      variants={item}
+      className="flex items-baseline gap-4 py-[3px]"
+    >
+      <span className="w-12 shrink-0 text-muted-foreground tabular-nums">
+        {year ?? ""}
+      </span>
+      <span className="flex-1">
+        {content}
+        {sub && <span className="block text-muted-foreground">{sub}</span>}
+      </span>
+      {right && (
+        <span className="text-muted-foreground shrink-0 tabular-nums">
+          {right}
+        </span>
+      )}
+    </motion.div>
+  );
+}
+
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <motion.section variants={item} className="mb-10">
+      <h2 className="font-medium mb-3">{title}</h2>
+      <div className="space-y-0">{children}</div>
+    </motion.section>
+  );
+}
 
 export default function Home() {
-  console.log(siStackoverflow)
   return (
-    <div className={twMerge("flex flex-col h-[100vh] w-full items-center justify-center p-6", inter.className)}>
-      <div className={"flex flex-col max-w-2xl w-full gap-4"}>
-        <RevealTextProvider>
-          <div className={"flex flex-col gap-2"}>
-            {/*<PulsingDot />*/}
-            <RevealText className={""}>
-              <p className={twMerge("text-base font-bold", aleo.className)}>Welcome! I&#39;m</p>
-            </RevealText>
-            <RevealText staggerChars={true}>
-              <p className={twMerge("text-4xl font-bold", aleo.className)}>Ege Kaan Gürkan</p>
-            </RevealText>
+    <main className="min-h-screen">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="max-w-[620px] mx-auto px-6 py-16 md:py-24"
+      >
+        <motion.header
+          variants={item}
+          className="mb-6 flex items-start justify-between gap-4"
+        >
+          <h1 className="text-2xl font-medium tracking-tight">
+            Ege Kaan Gürkan
+          </h1>
+          <ThemeToggle />
+        </motion.header>
 
-            <div className={"flex w-full items-center gap-2 overflow-hidden"}>
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: "100%"
-                }}
-                animate={{
-                  opacity: 1,
-                  y: ["100%", 0],
-                }}
-                transition={{
-                  delay: 0.7,
-                  duration: 0.3,
-                  ease: "easeInOut",
-                }}
-              >
-                <Briefcase className={"w-5 h-5"} strokeWidth={1}/>
-              </motion.div>
-              <RevealText className={"text-wrap"}>
-                <p className={"text-base text-muted-foreground"}>
-                  Integrations and Software Developer @ Maltego
-                </p>
-              </RevealText>
-            </div>
-            <div className={"flex w-full items-center gap-2 overflow-hidden"}>
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: "100%"
-                }}
-                animate={{
-                  opacity: 1,
-                  y: ["100%", 0],
-                }}
-                transition={{
-                  delay: 0.9,
-                  duration: 0.3,
-                  ease: "easeInOut",
-                }}
-              >
-                <MapPin className={"w-5 h-5"} strokeWidth={1}/>
-              </motion.div>
-              <RevealText>
-                <p className={"text-base text-wrap text-muted-foreground"}>
-                  From Ankara, based in Munich
-                </p>
-              </RevealText>
-            </div>
+        <motion.div
+          variants={item}
+          className="space-y-2.5 leading-normal mb-10"
+        >
+          <p>
+            I&apos;m a Full Stack Engineer from Ankara, based in Munich, with
+            4+ years building cloud-native infrastructure at scale and
+            designing agentic systems.
+          </p>
+          <p>
+            I currently build OSINT integrations at{" "}
+            <A href="https://maltego.com/">Maltego</A>, where I also help
+            shape our LLM efforts through disruptive POCs, company-wide
+            adoption, and the internal platforms that power them.
+          </p>
+          <p>
+            On the side I&apos;m building{" "}
+            <A href="https://buildinsight.dev">BuildInsight</A>, a
+            developer-first platform that turns user feedback into shipped
+            product improvements, and{" "}
+            <A href="https://stashling.app">Stashling</A>, which turns saved
+            TikToks, Reels and Shorts into searchable cards.
+          </p>
+          <p>
+            I consider myself a builder at heart and enjoy turning technical
+            challenges into tools people actually use.
+          </p>
+          <p>
+            You can reach me on{" "}
+            <A href="https://linkedin.com/in/ege-kaan-gurkan">LinkedIn</A>,{" "}
+            <A href="https://github.com/EgeKaanGurkan">GitHub</A>, or at{" "}
+            <A href="mailto:egekaanngurkan@gmail.com">
+              egekaanngurkan@gmail.com
+            </A>
+            . My <A href="/resume.pdf">resume</A> is here.
+          </p>
+        </motion.div>
 
-            <RevealText staggerChars={false}>
-              <p className={twMerge(
-                "text-lg text-foreground leading-relaxed max-w-prose text-wrap",
-              )}>
-                A computer scientist dedicated to creating intelligent integrations and scalable full-stack solutions. Driven by a passion for LLM technologies and process optimization, I transform complex technical challenges into efficient and impactful solutions.
-              </p>
-            </RevealText>
-            <motion.div
-              className={"flex items-center"}
-              animate={{
-                opacity: 1
-              }}
-              initial={{
-                opacity: 0
-              }}
-              transition={{
-                delay: 1,
-                duration: 0.3,
-                ease: "easeInOut"
-              }}
-            >
-              <Link href={"/resume.pdf"} download={"resume.pdf"}>
-                <Button variant={"outline"}>
-                  <Download className={"w-5 h-5"}/>
-                  <p className={"text-base"}>Resume</p>
-                </Button>
-              </Link>
-            </motion.div>
+        <Section title="Work">
+          <Row
+            year="2022"
+            right="Present"
+            subtitle="Maltego"
+            subtitleHref="https://maltego.com/"
+          >
+            Integrations &amp; Software Developer
+          </Row>
+          <Row year="2022" right="2022" subtitle="Layermark">
+            Systems Engineer &amp; Backend Developer
+          </Row>
+          <Row year="2021" right="2022" subtitle="BK Mobil">
+            Kubernetes Cluster Admin &amp; Backend Developer
+          </Row>
+        </Section>
 
-            <div className={"flex gap-2"}>
-              <motion.div
-                animate={{
-                  scale: 1,
-                  opacity: 1
-                }}
-                initial={{
-                  scale: 0,
-                  opacity: 0
-                }}
-                transition={{
-                  delay: 1,
-                  duration: 0.3,
-                  ease: "easeInOut"
-                }}
-              >
-                <Link href={"https://github.com/EgeKaanGurkan"}>
-                  <Button size={"icon"} variant={"ghost"} className={"hover:bg-[#5b5757]"}>
-                    <img src={"https://cdn.simpleicons.org/github/white"} className={"w-5 h-5"}/>
-                  </Button>
-                </Link>
-              </motion.div>
+        <Section title="Projects">
+          <Row year="2026">
+            <A href="https://stashling.app">Stashling</A>; turn saved TikToks,
+            Reels and Shorts into searchable cards
+          </Row>
+          <Row year="2026">
+            <A href="https://buildinsight.dev">BuildInsight</A>;
+            feedback-to-feature with agents
+          </Row>
+          <Row year="2022">
+            AlgoDrop; cloud-native NFT launchpad on AWS (EKS, Lambda, SQS)
+          </Row>
+          <Row year="2020">
+            Buluşunca; co-founded platform for small businesses during
+            COVID-19, seed-funded by Tuborg
+          </Row>
+        </Section>
 
-              <motion.div
-                animate={{
-                  scale: 1,
-                  opacity: 1
-                }}
-                initial={{
-                  scale: 0,
-                  opacity: 0
-                }}
-                transition={{
-                  delay: 1.1,
-                  duration: 0.3,
-                  ease: "easeInOut"
-                }}
-              >
-                <Link href={"https://linkedin.com/in/ege-kaan-gurkan"}>
-                  <Button size={"icon"} variant={"ghost"} className={"hover:bg-[#0A66C2]"}>
-                    <LinkedinIcon className={"w-5 h-5 "}/>
-                  </Button>
-                </Link>
-              </motion.div>
-              <motion.div
-                animate={{
-                  scale: 1,
-                  opacity: 1
-                }}
-                initial={{
-                  scale: 0,
-                  opacity: 0
-                }}
-                transition={{
-                  delay: 1.2,
-                  duration: 0.3,
-                  ease: "easeInOut"
-                }}
-              >
-                <Link href={"https://stackoverflow.com/users/4770282/ege-kaan-g%c3%bcrkan"}>
-                  <Button size={"icon"} variant={"ghost"} className={"hover:bg-[#F58025]"}>
-                    <img src={"https://cdn.simpleicons.org/stackoverflow/white"} className={"w-5 h-5"}/>
-                  </Button>
-                </Link>
-              </motion.div>
-            </div>
+        <Section title="Education">
+          <Row year="2018" right="2023">
+            B.Sc. Computer Science at Bilkent University
+          </Row>
+        </Section>
 
-            {/*<div className={"flex gap-2"}>*/}
-            {/*  <ProjectPreviewCard project={{*/}
-            {/*    name: "Buluşunca",*/}
-            {/*    tags: ["aws"],*/}
-            {/*    description: "A startup I started with a few friends during the COVID-19 pandemic lockdowns to help small businesses."*/}
-            {/*  }}/>*/}
-            {/*</div>*/}
-
-          </div>
-
-        </RevealTextProvider>
-      </div>
-    </div>
+        <Section title="Leadership">
+          <Row year="2019" right="2021">
+            Business Talks Board Member at Young Entrepreneurs Society
+          </Row>
+          <Row year="2019" right="2021">
+            Mentor &amp; Core Member at Google Developer Student Clubs
+          </Row>
+        </Section>
+      </motion.div>
+    </main>
   );
 }
