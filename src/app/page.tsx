@@ -9,19 +9,19 @@ const container: Variants = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.06,
+      staggerChildren: 0.07,
       delayChildren: 0.05,
     },
   },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, y: 6, filter: "blur(4px)" },
+  hidden: { opacity: 0, y: 14, filter: "blur(10px)" },
   show: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -157,7 +157,7 @@ export default function Home() {
             <A href="https://buildinsight.dev">BuildInsight</A>, a
             developer-first platform that turns user feedback into shipped
             product improvements, and{" "}
-            <A href="https://stashling.app">Stashling</A>, which turns saved
+            <A href="https://stashling.app/?ref=egekaangurkan.me">Stashling</A>, which turns saved
             TikToks, Reels and Shorts into searchable cards.
           </p>
           <p>
@@ -194,7 +194,7 @@ export default function Home() {
 
         <Section title="Projects">
           <Row year="2026">
-            <A href="https://stashling.app">Stashling</A>; turn saved TikToks,
+            <A href="https://stashling.app/?ref=egekaangurkan.me">Stashling</A>; turn saved TikToks,
             Reels and Shorts into searchable cards
           </Row>
           <Row year="2026">
