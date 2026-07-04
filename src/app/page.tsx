@@ -4,6 +4,7 @@ import { motion, type Variants } from "motion/react";
 import Link from "next/link";
 import React from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { cn } from "@/lib/utils";
 
 const container: Variants = {
   hidden: {},
@@ -61,6 +62,7 @@ function Row({
   href,
   subtitle,
   subtitleHref,
+  compact,
 }: {
   year?: string;
   children: React.ReactNode;
@@ -68,6 +70,7 @@ function Row({
   href?: string;
   subtitle?: React.ReactNode;
   subtitleHref?: string;
+  compact?: boolean;
 }) {
   const content = href ? (
     <A href={href}>{children}</A>
@@ -85,9 +88,9 @@ function Row({
   return (
     <motion.div
       variants={item}
-      className="flex items-baseline gap-4 py-[3px]"
+      className={cn("flex items-baseline gap-4 py-[3px]", compact && "-mt-2")}
     >
-      <span className="w-12 shrink-0 text-muted-foreground tabular-nums">
+      <span className="w-20 shrink-0 text-muted-foreground tabular-nums">
         {year ?? ""}
       </span>
       <span className="flex-1">
@@ -176,18 +179,24 @@ export default function Home() {
         </motion.div>
 
         <Section title="Work">
+          <Row year="Jun 2026" right="Present">
+            Senior Software Engineer
+          </Row>
           <Row
-            year="2022"
-            right="Present"
+            year="Nov 2022"
+            right="Jun 2026"
             subtitle="Maltego"
             subtitleHref="https://maltego.com/"
+            compact
           >
-            Integrations &amp; Software Developer
+            <span className="text-muted-foreground">
+              Integrations &amp; Software Developer
+            </span>
           </Row>
-          <Row year="2022" right="2022" subtitle="Layermark">
+          <Row year="Jul 2022" right="Nov 2022" subtitle="Layermark">
             Systems Engineer &amp; Backend Developer
           </Row>
-          <Row year="2021" right="2022" subtitle="BK Mobil">
+          <Row year="Jun 2021" right="Jul 2022" subtitle="BK Mobil">
             Kubernetes Cluster Admin &amp; Backend Developer
           </Row>
         </Section>
